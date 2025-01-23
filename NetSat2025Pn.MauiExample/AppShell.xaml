@@ -8,7 +8,7 @@
     Title="NetSat2025Pn.MauiExample">
 
     <ShellContent
-        Title="Home"
+        Title="Equalizer"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

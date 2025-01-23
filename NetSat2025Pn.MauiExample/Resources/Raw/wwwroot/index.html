@@ -3,39 +3,47 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!-- aggiungo il tag meta per il viewport per adattare la pagina al dispositivo -->
     <meta name="viewport" content="width=device-width" />
+
+    <!-- posso udare path relativi alla cartella wwwroot -->
     <link rel="stylesheet" href="styles/app.css">
-    <script src="scripts/HybridWebView.js"></script>
     <script src="scripts/chart.js"></script>
+
+    <!-- file con il codice javascript per la comunicazione tra il codice C# e il codice javascript -->
+    <script src="scripts/HybridWebView.js"></script>
 
     <script>
         
+        //valori di default del grafico
         var xValues = ['32','64','125','250','500','1K','4K','8K','16K'];
         var yValues = [2,5,7,11,8,15,9,9,3];
 
+        //Evento che viene chiamato quando viene ricevuto un messaggio dal codice C#
         window.addEventListener(
             "HybridWebViewMessageReceived",
             function (e) {
+                //Cambio il tipo del grafico in base al valore ricevuto da C#
                 myChart.config.type = e.detail.message;
                 myChart.update();
             });
 
-            function setData(index,val) {
-                yValues[index] = val;
-                myChart.data.datasets[0].data = yValues;
-                myChart.update();
-                return true;
-            }
+        //Funzione chiamata da C# per cambiare i dati del grafico del nodo selezionato
+        function setData(index,val) {
+            yValues[index] = val;
+            myChart.data.datasets[0].data = yValues;
+            myChart.update();
+            return true;
+        }
 
     </script>
 </head>
 <body>
     
     <div class="container">
-        <img src="Images/Gear.png" height="20" width="20" style="position: absolute;"></img>
-        <canvas id="myChart" claaa="chart">
-        </canvas>
-        </div>
+        <img src="Images/Gear.png" height="20" width="20" style="position: absolute;" />
+        <canvas id="myChart" claaa="chart"></canvas>
+    </div>
 
     <script>
         const ctx = document.getElementById('myChart');
@@ -49,16 +57,20 @@
                                     data: yValues,
                                     fill: false,
                                     borderColor: 'rgb(75, 192, 192)',
+                                    backgroundColor: 'rgb(75, 192, 192)',
                                     tension: 0.1
                                 }]
                             },
                             options: {
+                                //Evento che viene chiamato quando si clicca su un punto del grafico
                                 onClick: (event, elements, chart) => {
                                     if (elements[0]) {            
                                         const i = elements[0].index;
                                         
+                                        //Invio il messaggio al codice C# per cambiare il nodo selezionato
                                         window.HybridWebView.SendRawMessage('{ "Index": ' + i + ', "Value": ' + chart.data.datasets[0].data[i] + ' }');
                                         
+                                        //In alternativa si può usare il metodo InvokeDotNet
                                         //window.HybridWebView.InvokeDotNet('SetSelectedNode',[i,chart.data.datasets[0].data[i]]);
                                     }
                                 }
