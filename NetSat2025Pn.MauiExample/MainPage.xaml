@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NetSat2025Pn.MauiExample.MainPage">
+
+<Grid RowDefinitions="50,*,Auto" Margin="0,15,0,0" ColumnDefinitions="*"> 
+        <HorizontalStackLayout Grid.Row="0" Spacing="5" Margin="5"  HorizontalOptions="Center">
+                <Button Clicked="ButtonBars_Clicked" Text="Bars" WidthRequest="120"></Button>
+                <Button Clicked="ButtonLines_Clicked" Text="Lines"  WidthRequest="120"></Button>
+        </HorizontalStackLayout>
+        <HybridWebView x:Name="hybridWebView"
+                        RawMessageReceived="OnHybridWebViewRawMessageReceived"
+                        Grid.Row="1" />
+        <Slider x:Name="Slider" Grid.Row="2" Minimum="0" Maximum="15" IsEnabled="False" ValueChanged="Slider_ValueChanged" />      
+</Grid>
+</ContentPage>
