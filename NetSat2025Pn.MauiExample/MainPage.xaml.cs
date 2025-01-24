@@ -47,10 +47,10 @@ public partial class MainPage : ContentPage
         hybridWebView.SendRawMessage("bar");
     }
 
-    //Invio un messaggio a javascript per cambiare il tipo di grafico
-    private void ButtonLines_Clicked(object sender, EventArgs e)
-    {
-        hybridWebView.SendRawMessage("line");
+    //Utilizzo il metodo EvaluateJavaScriptAsync per cambiare il tipo di grafico invece di usare i messaggi
+    private async void ButtonLines_Clicked(object sender, EventArgs e)
+    {        
+        await hybridWebView.EvaluateJavaScriptAsync("myChart.config.type='line'; myChart.update();");
     }
 
     //Metodo chiamato da javascript per settare il nodo selezionato
