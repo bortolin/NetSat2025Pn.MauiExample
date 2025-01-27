@@ -4,4 +4,4 @@
 
 Demo project used during my session
 
-Slides: 
+Slides: https://github.com/bortolin/NetSat2025Pn.MauiExample/blob/main/NetSat2025Pn-MAUI.pdf
